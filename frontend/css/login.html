@@ -13,62 +13,60 @@
 
 <body>
     <div class="container">
+        <!-- LOGIN FORM -->
         <div class="form-box login">
             <form action="">
                 <h1>Login</h1>
                 <div class="input-box">
-                    <input type="username" placeholder="Username"
-                    required>
+                    <input type="text" placeholder="Username" required>
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password"
-                    required>
+                    <input type="password" placeholder="Password" required>
                     <i class='bx bxs-lock-alt'></i>
                 </div>
                 <div class="forgot-link">
-                    <a href="#">Forgot passowrd?</a>
+                    <a href="#">Forgot password?</a>
                 </div>
                 <button type="button" class="btn">Login</button>
                 <p>or login with social platforms</p>
                 <div class="social-icons">
-                    <a href="#"><i class='bx bxl-google' ></i></a>
-                    <a href="#"><i class='bx bxl-facebook-circle' ></i></a>
-                    <a href="#"><i class='bx bxl-apple' ></i></a>
-                    <a href="#"><i class='bx bxl-twitter'></i></a>
+                    <a href="https://accounts.google.com/signin" target="_blank"><i class='bx bxl-google'></i></a>
+                    <a href="https://www.facebook.com/login" target="_blank"><i class='bx bxl-facebook-circle'></i></a>
+                    <a href="https://appleid.apple.com/" target="_blank"><i class='bx bxl-apple'></i></a>
+                    <a href="https://twitter.com/login" target="_blank"><i class='bx bxl-twitter'></i></a>
                 </div>
             </form>
         </div>
 
+        <!-- REGISTER FORM -->
         <div class="form-box register">
             <form action="">
                 <h1>Registration</h1>
                 <div class="input-box">
-                    <input type="username" placeholder="Username"
-                    required>
+                    <input type="text" placeholder="Username" required>
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">
-                    <input type="email" placeholder="Email"
-                    required>
-                    <i class='bx bxs-envelope' ></i>
+                    <input type="email" placeholder="Email" required>
+                    <i class='bx bxs-envelope'></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password"
-                    required>
+                    <input type="password" placeholder="Password" required>
                     <i class='bx bxs-lock-alt'></i>
                 </div>
                 <button type="button" class="btn">Register</button>
                 <p>or register with social platforms</p>
                 <div class="social-icons">
-                    <a href="#"><i class='bx bxl-google' ></i></a>
-                    <a href="#"><i class='bx bxl-facebook-circle' ></i></a>
-                    <a href="#"><i class='bx bxl-apple' ></i></a>
-                    <a href="#"><i class='bx bxl-twitter'></i></a>
+                    <a href="https://accounts.google.com/signup" target="_blank"><i class='bx bxl-google'></i></a>
+                    <a href="https://www.facebook.com/r.php" target="_blank"><i class='bx bxl-facebook-circle'></i></a>
+                    <a href="https://appleid.apple.com/account" target="_blank"><i class='bx bxl-apple'></i></a>
+                    <a href="https://twitter.com/i/flow/signup" target="_blank"><i class='bx bxl-twitter'></i></a>
                 </div>
             </form>
         </div>
 
+        <!-- TOGGLE PANEL -->
         <div class="toggle-box">
             <div class="toggle-panel toggle-left">
                 <h1>Hello, Welcome!</h1>
@@ -78,7 +76,7 @@
             <div class="toggle-panel toggle-right">
                 <h1>Welcome Back!</h1>
                 <p>Already have an account?</p>
-                <button class="btn register-btn">Login</button>
+                <button class="btn login-btn">Login</button> <!-- ✅ FIXED -->
             </div>
         </div>
     </div>
