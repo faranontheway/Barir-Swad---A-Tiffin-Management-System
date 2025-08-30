@@ -113,6 +113,12 @@ form {
     font-size: 16px;
     color: #fff;
     font-weight: 600;  
+    transition: background 0.3s ease;
+}
+
+/* Hover effect for login/register buttons */
+.btn:hover {
+    background: #4f6edc; /* darker shade */
 }
 
 .container p {
@@ -201,59 +207,13 @@ form {
     background: transparent;
     border: 2px solid;
     box-shadow: none;
+    color: #fff;
+    transition: 0.3s;
 }
 
-/* @media screen and (max-width: 650px) {
-    .container {
-        height: calc(100vh - 40px);
-    }
-
-    .form-box {
-        background: purple;
-        bottom: 0;
-        width: 100%;
-        height: 70%;
-    }
-
-    .container.active .form-box {
-        right: 0;
-        bottom: 30%;
-    }
-
-    .toggle-box::before {
-        left: 0%;
-        width: 100%;
-        height: 300%;
-        top: -270%;
-        border-radius: 20vw;        
-    }
-
-    .container.active .toggle-box::before {
-        left: 0%;
-        top: 70%;
-    }
-
-    .toggle-panel {
-        border: 2px;
-        width: 100%;
-        height: 30%;
-    }
-
-    .toggle-panel.toggle-left {
-        top: 0;
-    }
-
-    .container.active .toggle-panel.toggle-left {
-        left: 0;
-        top: -30%;
-    }
-
-    .toggle-panel.toggle-right {
-        right: 0;
-        bottom: -30%;
-    }
-
-    .container.active .toggle-panel.toggle-right {
-        bottom: 0;
-    }
-} */
+/* Hover effect for toggle panel buttons */
+.toggle-panel .btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: #fff;
+    color: #fff;
+}
