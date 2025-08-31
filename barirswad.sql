@@ -112,14 +112,19 @@ CREATE TABLE `orders_have_meal` (
 --
 
 CREATE TABLE `user` (
-  `U_ID` int(10) NOT NULL,
-  `Email` varchar(50) NOT NULL,
-  `Exp_Years` int(50) NOT NULL,
-  `Name` varchar(100) NOT NULL,
-  `Address` varchar(100) NOT NULL,
-  `Type` enum('Admin','Customer','Cook','') NOT NULL DEFAULT 'Customer',
-  `Password` varchar(15) NOT NULL
+  `U_ID` INT(10) NOT NULL AUTO_INCREMENT,
+  `Email` VARCHAR(50) NOT NULL,
+  `Exp_Years` INT(50) NOT NULL,
+  `Name` VARCHAR(100) NOT NULL,
+  `Address` VARCHAR(100) NOT NULL,
+  `Type` ENUM('Admin','Customer','Cook') NOT NULL DEFAULT 'Customer',
+  `Password` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`U_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
 
 --
 -- Dumping data for table `user`
