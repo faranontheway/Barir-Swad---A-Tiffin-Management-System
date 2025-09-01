@@ -112,19 +112,14 @@ CREATE TABLE `orders_have_meal` (
 --
 
 CREATE TABLE `user` (
-  `U_ID` INT(10) NOT NULL AUTO_INCREMENT,
-  `Email` VARCHAR(50) NOT NULL,
-  `Exp_Years` INT(50) NOT NULL,
-  `Name` VARCHAR(100) NOT NULL,
-  `Address` VARCHAR(100) NOT NULL,
-  `Type` ENUM('Admin','Customer','Cook') NOT NULL DEFAULT 'Customer',
-  `Password` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`U_ID`)
+  `U_ID` int(10) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `Exp_Years` int(50) NOT NULL,
+  `Name` varchar(100) NOT NULL,
+  `Address` varchar(100) NOT NULL,
+  `Type` enum('Admin','Customer','Cook','') NOT NULL DEFAULT 'Customer',
+  `Password` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
-
-
 
 --
 -- Dumping data for table `user`
@@ -179,6 +174,27 @@ INSERT INTO `user_phone_no` (`User_ID`, `Phone_No`) VALUES
 (1001, 1552306466),
 (1002, 1316733425),
 (1003, 1635895385);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_id_tracker`
+-- This table tracks the next available ID for each user type
+--
+
+CREATE TABLE `user_id_tracker` (
+  `user_type` enum('Cook','Customer','Admin') NOT NULL,
+  `next_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Initialize the ID tracker based on current data
+--
+
+INSERT INTO `user_id_tracker` (`user_type`, `next_id`) VALUES
+('Cook', 3),        -- Next cook will get ID 3 (since you have 1,2)
+('Customer', 1004), -- Next customer will get ID 1004 (since you have 1001,1002,1003)
+('Admin', 102);     -- Next admin will get ID 102 (since you have 101)
 
 --
 -- Indexes for dumped tables
@@ -239,6 +255,12 @@ ALTER TABLE `user_phone_no`
   ADD KEY `user_phone_fk` (`User_ID`);
 
 --
+-- Indexes for table `user_id_tracker`
+--
+ALTER TABLE `user_id_tracker`
+  ADD PRIMARY KEY (`user_type`);
+
+--
 -- Constraints for dumped tables
 --
 
@@ -280,6 +302,40 @@ ALTER TABLE `user_cooks_meal`
 --
 ALTER TABLE `user_phone_no`
   ADD CONSTRAINT `user_phone_fk` FOREIGN KEY (`User_ID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- --------------------------------------------------------
+
+--
+-- Create the trigger for auto-assigning user IDs
+--
+
+DELIMITER //
+
+CREATE TRIGGER auto_assign_user_id
+BEFORE INSERT ON user
+FOR EACH ROW
+BEGIN
+    DECLARE next_user_id INT DEFAULT 0;
+    
+    -- Only assign ID if it's not provided (0 or NULL)
+    IF NEW.U_ID IS NULL OR NEW.U_ID = 0 THEN
+        -- Get the next ID for this user type
+        SELECT next_id INTO next_user_id 
+        FROM user_id_tracker 
+        WHERE user_type = NEW.Type;
+        
+        -- Assign the ID
+        SET NEW.U_ID = next_user_id;
+        
+        -- Update the tracker for next time
+        UPDATE user_id_tracker 
+        SET next_id = next_id + 1 
+        WHERE user_type = NEW.Type;
+    END IF;
+END//
+
+DELIMITER ;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
