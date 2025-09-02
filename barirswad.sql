@@ -141,7 +141,49 @@ INSERT INTO `orders_have_meal` (`M_ID`, `OrderID`, `Quantity`, `Price`) VALUES
 (6, 9, 1, 300.00);
 
 -- --------------------------------------------------------
+-- Add catering_services table to existing database
+CREATE TABLE `catering_services` (
+  `Catering_ID` int(10) NOT NULL AUTO_INCREMENT,
+  `Customer_ID` int(10) NOT NULL,
+  `Event_Name` varchar(100) NOT NULL,
+  `Event_Date` date NOT NULL,
+  `Event_Time` time NOT NULL,
+  `Event_Location` text NOT NULL,
+  `Number_of_People` int(11) NOT NULL,
+  `Total_Cost` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `Status` enum('Pending','Confirmed','In Progress','Completed','Cancelled') NOT NULL DEFAULT 'Pending',
+  `Special_Requirements` text DEFAULT NULL,
+  `Contact_Person` varchar(100) NOT NULL,
+  `Contact_Phone` varchar(15) NOT NULL,
+  `Advance_Payment` decimal(10,2) DEFAULT 0.00,
+  `Payment_Status` enum('Pending','Partial','Full') NOT NULL DEFAULT 'Pending',
+  `Created_Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Updated_Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Catering_ID`),
+  KEY `customer_catering_fk` (`Customer_ID`),
+  CONSTRAINT `customer_catering_fk` FOREIGN KEY (`Customer_ID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `min_people_check` CHECK (`Number_of_People` >= 10)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Junction table for catering services and meals
+CREATE TABLE `catering_has_meals` (
+  `Catering_ID` int(10) NOT NULL,
+  `Meal_ID` int(10) NOT NULL,
+  `Quantity_Per_Person` decimal(3,2) NOT NULL DEFAULT 1.00,
+  `Total_Quantity` int(11) NOT NULL,
+  `Unit_Price` decimal(10,2) NOT NULL,
+  `Total_Price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`Catering_ID`, `Meal_ID`),
+  KEY `catering_meal_fk` (`Meal_ID`),
+  CONSTRAINT `catering_service_fk` FOREIGN KEY (`Catering_ID`) REFERENCES `catering_services` (`Catering_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `catering_meal_fk` FOREIGN KEY (`Meal_ID`) REFERENCES `meal` (`Meal_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Insert sample catering data
+INSERT INTO `catering_services` (`Customer_ID`, `Event_Name`, `Event_Date`, `Event_Time`, `Event_Location`, `Number_of_People`, `Total_Cost`, `Status`, `Special_Requirements`, `Contact_Person`, `Contact_Phone`, `Advance_Payment`, `Payment_Status`) VALUES
+(1001, 'Wedding Reception', '2025-09-15', '18:00:00', 'Community Center, Banani', 150, 45000.00, 'Confirmed', 'Vegetarian options needed, decorative presentation', 'Farhan Zahin', '01552306466', 15000.00, 'Partial'),
+(1002, 'Corporate Event', '2025-09-20', '12:00:00', 'Office Building, Gulshan', 50, 15000.00, 'Pending', 'Lunch meeting, professional setup', 'Ahona Hasan', '01316733425', 0.00, 'Pending'),
+(1003, 'Birthday Party', '2025-09-25', '15:00:00', 'Private Residence, Dhanmondi', 25, 7500.00, 'Confirmed', 'Kids party, colorful presentation', 'Jung Kook', '01635895385', 2500.00, 'Partial');
 --
 -- Table structure for table `user`
 --
