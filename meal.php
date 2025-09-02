@@ -18,7 +18,7 @@ if (!$result) {
 </head>
 <body>
   <div class="container">
-    <h1>🍴 Meal Menu</h1>
+    <h1>🍴Meal Menu</h1>
 
     <?php if ($result->num_rows > 0): ?>
       <div class="meal-grid">
@@ -31,7 +31,7 @@ if (!$result) {
             <p><strong>Description:</strong> <?= htmlspecialchars($row['Description']) ?></p>
             <p><strong>Portion:</strong> <?= htmlspecialchars($row['Proportion']) ?></p>
             <p><strong>Cuisine:</strong> <?= htmlspecialchars($row['Cuisine']) ?></p>
-            <p class="price">৳ <?= number_format($row['Pricing'], 2) ?></p>
+            <p class="price">৳<?= number_format($row['Pricing'], 2) ?></p>
             <a href="add_to_cart.php?meal_id=<?= $row['Meal_ID'] ?>" class="btn">Add to Cart</a>
           </div>
         <?php endwhile; ?>
@@ -42,5 +42,3 @@ if (!$result) {
   </div>
 </body>
 </html>
-
-
