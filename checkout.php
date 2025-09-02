@@ -1,0 +1,96 @@
+<?php
+session_start();
+require 'dbconnect.php';
+
+if (!isset($_SESSION['user_id'])) {
+    // Store the page they wanted to visit
+    $_SESSION['redirect_after_login'] = "checkout.php";
+    header("Location: login.php");
+    exit;
+}
+
+
+// --- Safety check: cart must exist and not be empty
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+    die("âŒ Your cart is empty. <a href='meal.php'>Go back to menu</a>");
+}
+
+// --- Calculate total cost from cart
+$grand_total = 0;
+foreach ($_SESSION['cart'] as $meal) {
+    $grand_total += $meal['qty'] * $meal['price'];
+}
+
+// --- Insert into orders table
+$order_sql = "INSERT INTO orders (customer_id, Cost, Status, Date) VALUES (?, ?, ?, NOW())";
+$stmt_order = $conn->prepare($order_sql);
+
+$uid = 1; // ðŸ”¥ for now, hardcode a test user ID. Later link with login system
+$status = "Pending";
+
+$stmt_order->bind_param("ids", $uid, $grand_total, $status);
+$stmt_order->execute();
+
+// --- Get the newly created OrderID
+$order_id = $stmt_order->insert_id;
+
+// --- Insert meals into orders_have_meal
+$item_sql = "INSERT INTO orders_have_meal (OrderID, M_ID, Quantity, Price) VALUES (?, ?, ?, ?)";
+$stmt_item = $conn->prepare($item_sql);
+
+foreach ($_SESSION['cart'] as $meal_id => $meal) {
+    $qty = $meal['qty'];
+    $price = $meal['price'];
+    $stmt_item->bind_param("iiid", $order_id, $meal_id, $qty, $price);
+    $stmt_item->execute();
+}
+
+// --- Clear cart after checkout
+unset($_SESSION['cart']);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f0;
+      text-align: center;
+      margin: 50px;
+    }
+    .box {
+      background: #fff;
+      border: 2px solid #d35400;
+      border-radius: 10px;
+      padding: 30px;
+      display: inline-block;
+    }
+    h1 {
+      color: #d35400;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: white;
+      background: #d35400;
+      border-radius: 5px;
+    }
+    a:hover {
+      background: #a84300;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>✅ Order Placed Successfully!</h1>
+    <p>Your Order ID is: <strong><?php echo $order_id; ?></strong></p>
+    <p>Total Amount: ৳ <?php echo number_format($grand_total, 2); ?></p>
+    <a href="meal.php">Go Back to Menu</a>
+  </div>
+</body>
+</html>

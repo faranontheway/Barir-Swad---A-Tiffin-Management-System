@@ -49,7 +49,7 @@ $recent_orders = $conn->query("
     FROM orders o 
     JOIN user u ON o.Customer_ID = u.U_ID 
     ORDER BY o.Date DESC 
-    LIMIT 5
+    LIMIT 50
 ");
 
 // Recent users
@@ -58,7 +58,7 @@ $recent_users = $conn->query("
     FROM user 
     WHERE Type IN ('Customer', 'Cook') 
     ORDER BY U_ID DESC 
-    LIMIT 5
+    LIMIT 50
 ");
 ?>
 
@@ -250,7 +250,7 @@ $recent_users = $conn->query("
                                 <tr>
                                     <td>#<?= $order['OrderID'] ?></td>
                                     <td><?= htmlspecialchars($order['Customer']) ?></td>
-                                    <td>৳<?= number_format($order['Cost'], 2) ?></td>
+                                    <td>à§³<?= number_format($order['Cost'], 2) ?></td>
                                     <td><span class="status <?= strtolower($order['Status']) ?>"><?= $order['Status'] ?></span></td>
                                     <td><?= $order['Date'] ?></td>
                                 </tr>
