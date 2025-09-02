@@ -33,7 +33,9 @@ CREATE TABLE `complaint_support` (
   `Description` text NOT NULL,
   `Status` enum('Open','In Progress','Resolved','Closed') NOT NULL DEFAULT 'Open',
   `Submitted_Date` date NOT NULL,
-  `Messages` text NOT NULL
+  `Messages` text NOT NULL,
+  PRIMARY KEY (`Complaint_ID`),
+  KEY `user_complaint_fk` (`User_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -43,12 +45,15 @@ CREATE TABLE `complaint_support` (
 --
 
 CREATE TABLE `customer_rates_cooks` (
-  `ReviewID` int(11) NOT NULL,
+  `ReviewID` int(11) NOT NULL AUTO_INCREMENT,
   `CustomerID` int(11) NOT NULL,
   `CookID` int(11) NOT NULL,
   `Rating` decimal(2,1) DEFAULT NULL CHECK (`Rating` >= 1 and `Rating` <= 5),
   `Comment` text DEFAULT NULL,
-  `Created_At` timestamp NOT NULL DEFAULT current_timestamp()
+  `Created_At` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`ReviewID`),
+  KEY `cook_rate_fk` (`CookID`),
+  KEY `customer_rate_fk` (`CustomerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -63,7 +68,8 @@ CREATE TABLE `meal` (
   `Description` text NOT NULL,
   `Proportion` varchar(50) NOT NULL,
   `Pricing` decimal(10,2) NOT NULL,
-  `Cuisine` varchar(50) NOT NULL
+  `Cuisine` varchar(50) NOT NULL,
+  PRIMARY KEY (`Meal_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -88,13 +94,15 @@ INSERT INTO `meal` (`Meal_ID`, `Name`, `Description`, `Proportion`, `Pricing`, `
 --
 
 CREATE TABLE `orders` (
-  `OrderID` int(11) NOT NULL,
+  `OrderID` int(11) NOT NULL AUTO_INCREMENT,
   `Customer_ID` int(10) NOT NULL,
   `Cost` decimal(10,2) NOT NULL,
   `Status` enum('Pending','On the way','Accepted','Delivered','Cancelled') NOT NULL DEFAULT 'Pending',
   `Date` date NOT NULL,
-  `Catering_Service` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Catering_Service` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`OrderID`),
+  KEY `customer_order_fk` (`Customer_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -121,7 +129,9 @@ CREATE TABLE `orders_have_meal` (
   `M_ID` int(10) NOT NULL,
   `OrderID` int(10) NOT NULL,
   `Quantity` int(11) NOT NULL DEFAULT 1,
-  `Price` decimal(10,2) NOT NULL
+  `Price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`M_ID`,`OrderID`),
+  KEY `order_meal_fk` (`OrderID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -153,7 +163,8 @@ CREATE TABLE `user` (
   `Name` varchar(100) NOT NULL,
   `Address` varchar(100) NOT NULL,
   `Type` enum('Admin','Customer','Cook','') NOT NULL DEFAULT 'Customer',
-  `Password` varchar(15) NOT NULL
+  `Password` varchar(15) NOT NULL,
+  PRIMARY KEY (`U_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -169,32 +180,6 @@ INSERT INTO `user` (`U_ID`, `Email`, `Exp_Years`, `Name`, `Address`, `Type`, `Pa
 (1003, 'jungkook@gmail.com', 0, 'Jung Kook', '16/f Gulshan-1, Dhaka', 'Customer', 'kook97'),
 (1004, 'farzana.eti@gmail.com', 0, 'Farzana Eti', 'mirpur', 'Customer', '1234');
 
---
--- Triggers `user`
---
-DELIMITER $$
-CREATE TRIGGER `auto_assign_user_id` BEFORE INSERT ON `user` FOR EACH ROW BEGIN
-    DECLARE next_user_id INT DEFAULT 0;
-    
-    -- Only assign ID if it's not provided (0 or NULL)
-    IF NEW.U_ID IS NULL OR NEW.U_ID = 0 THEN
-        -- Get the next ID for this user type
-        SELECT next_id INTO next_user_id 
-        FROM user_id_tracker 
-        WHERE user_type = NEW.Type;
-        
-        -- Assign the ID
-        SET NEW.U_ID = next_user_id;
-        
-        -- Update the tracker for next time
-        UPDATE user_id_tracker 
-        SET next_id = next_id + 1 
-        WHERE user_type = NEW.Type;
-    END IF;
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -203,7 +188,9 @@ DELIMITER ;
 
 CREATE TABLE `user_cooks_meal` (
   `Cook_ID` int(10) NOT NULL,
-  `Meal_ID` int(10) NOT NULL
+  `Meal_ID` int(10) NOT NULL,
+  PRIMARY KEY (`Cook_ID`,`Meal_ID`),
+  KEY `meal_cook_fk` (`Meal_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -225,7 +212,8 @@ INSERT INTO `user_cooks_meal` (`Cook_ID`, `Meal_ID`) VALUES
 
 CREATE TABLE `user_id_tracker` (
   `user_type` enum('Cook','Customer','Admin') NOT NULL,
-  `next_id` int(10) NOT NULL
+  `next_id` int(10) NOT NULL,
+  PRIMARY KEY (`user_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -245,7 +233,9 @@ INSERT INTO `user_id_tracker` (`user_type`, `next_id`) VALUES
 
 CREATE TABLE `user_phone_no` (
   `User_ID` int(10) NOT NULL,
-  `Phone_No` int(15) NOT NULL
+  `Phone_No` int(15) NOT NULL,
+  PRIMARY KEY (`Phone_No`),
+  KEY `user_phone_fk` (`User_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -279,8 +269,11 @@ CREATE TABLE `catering_services` (
   `Advance_Payment` decimal(10,2) DEFAULT 0.00,
   `Payment_Status` enum('Pending','Partial','Full') NOT NULL DEFAULT 'Pending',
   `Created_Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Updated_Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Updated_Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Catering_ID`),
+  KEY `customer_catering_fk` (`Customer_ID`),
+  CONSTRAINT `min_people_check` CHECK (`Number_of_People` >= 10)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `catering_services`
@@ -303,109 +296,38 @@ CREATE TABLE `catering_has_meals` (
   `Quantity_Per_Person` decimal(3,2) NOT NULL DEFAULT 1.00,
   `Total_Quantity` int(11) NOT NULL,
   `Unit_Price` decimal(10,2) NOT NULL,
-  `Total_Price` decimal(10,2) NOT NULL
+  `Total_Price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`Catering_ID`, `Meal_ID`),
+  KEY `catering_meal_fk` (`Meal_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Indexes for dumped tables
---
+-- --------------------------------------------------------
 
 --
--- Indexes for table `complaint_support`
+-- Triggers `user`
 --
-ALTER TABLE `complaint_support`
-  ADD PRIMARY KEY (`Complaint_ID`),
-  ADD KEY `user_complaint_fk` (`User_ID`);
-
---
--- Indexes for table `customer_rates_cooks`
---
-ALTER TABLE `customer_rates_cooks`
-  ADD PRIMARY KEY (`ReviewID`),
-  ADD KEY `cook_rate_fk` (`CookID`),
-  ADD KEY `customer_rate_fk` (`CustomerID`);
-
---
--- Indexes for table `meal`
---
-ALTER TABLE `meal`
-  ADD PRIMARY KEY (`Meal_ID`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`OrderID`),
-  ADD KEY `customer_order_fk` (`Customer_ID`);
-
---
--- Indexes for table `orders_have_meal`
---
-ALTER TABLE `orders_have_meal`
-  ADD PRIMARY KEY (`M_ID`,`OrderID`),
-  ADD KEY `order_meal_fk` (`OrderID`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`U_ID`);
-
---
--- Indexes for table `user_cooks_meal`
---
-ALTER TABLE `user_cooks_meal`
-  ADD PRIMARY KEY (`Cook_ID`,`Meal_ID`),
-  ADD KEY `meal_cook_fk` (`Meal_ID`);
-
---
--- Indexes for table `user_id_tracker`
---
-ALTER TABLE `user_id_tracker`
-  ADD PRIMARY KEY (`user_type`);
-
---
--- Indexes for table `user_phone_no`
---
-ALTER TABLE `user_phone_no`
-  ADD PRIMARY KEY (`Phone_No`),
-  ADD KEY `user_phone_fk` (`User_ID`);
-
---
--- Indexes for table `catering_services`
---
-ALTER TABLE `catering_services`
-  ADD PRIMARY KEY (`Catering_ID`),
-  ADD KEY `customer_catering_fk` (`Customer_ID`);
-
---
--- Indexes for table `catering_has_meals`
---
-ALTER TABLE `catering_has_meals`
-  ADD PRIMARY KEY (`Catering_ID`, `Meal_ID`),
-  ADD KEY `catering_meal_fk` (`Meal_ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `customer_rates_cooks`
---
-ALTER TABLE `customer_rates_cooks`
-  MODIFY `ReviewID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `catering_services`
---
-ALTER TABLE `catering_services`
-  MODIFY `Catering_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+DELIMITER $$
+CREATE TRIGGER `auto_assign_user_id` BEFORE INSERT ON `user` FOR EACH ROW BEGIN
+    DECLARE next_user_id INT DEFAULT 0;
+    
+    -- Only assign ID if it's not provided (0 or NULL)
+    IF NEW.U_ID IS NULL OR NEW.U_ID = 0 THEN
+        -- Get the next ID for this user type
+        SELECT next_id INTO next_user_id 
+        FROM user_id_tracker 
+        WHERE user_type = NEW.Type;
+        
+        -- Assign the ID
+        SET NEW.U_ID = next_user_id;
+        
+        -- Update the tracker for next time
+        UPDATE user_id_tracker 
+        SET next_id = next_id + 1 
+        WHERE user_type = NEW.Type;
+    END IF;
+END
+$$
+DELIMITER ;
 
 --
 -- Constraints for dumped tables
@@ -454,8 +376,7 @@ ALTER TABLE `user_phone_no`
 -- Constraints for table `catering_services`
 --
 ALTER TABLE `catering_services`
-  ADD CONSTRAINT `customer_catering_fk` FOREIGN KEY (`Customer_ID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `min_people_check` CHECK (`Number_of_People` >= 10);
+  ADD CONSTRAINT `customer_catering_fk` FOREIGN KEY (`Customer_ID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `catering_has_meals`
