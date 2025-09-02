@@ -353,7 +353,7 @@ $cuisine_stats = $conn->query("
                                 <td class="meal-name"><?= htmlspecialchars($meal['Name']) ?></td>
                                 <td class="meal-desc"><?= htmlspecialchars($meal['Description']) ?></td>
                                 <td class="meal-prop"><?= htmlspecialchars($meal['Proportion']) ?></td>
-                                <td class="price-cell meal-price">৳<?= number_format($meal['Pricing List'], 2) ?></td>
+                                <td class="price-cell meal-price">৳<?= number_format($meal['Pricing'], 2) ?></td>
                                 <td>
                                     <span class="cuisine-badge <?= strtolower($meal['Cuisine']) ?>">
                                         <?= $meal['Cuisine'] ?>
@@ -419,4 +419,5 @@ $cuisine_stats = $conn->query("
         }
     </script>
 </body>
+
 </html>
