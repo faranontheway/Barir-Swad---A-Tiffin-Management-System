@@ -419,5 +419,4 @@ $cuisine_stats = $conn->query("
         }
     </script>
 </body>
-
 </html>
