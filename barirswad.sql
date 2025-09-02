@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2025 at 05:02 PM
+-- Generation Time: Sep 02, 2025 at 06:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -141,24 +141,23 @@ CREATE TABLE `orders` (
   `Customer_ID` int(10) NOT NULL,
   `Cost` decimal(10,2) NOT NULL,
   `Status` enum('Pending','On the way','Accepted','Delivered','Cancelled') NOT NULL DEFAULT 'Pending',
-  `Date` date NOT NULL,
-  `Catering_Service` tinyint(4) NOT NULL DEFAULT 0
+  `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`OrderID`, `Customer_ID`, `Cost`, `Status`, `Date`, `Catering_Service`) VALUES
-(1, 1, 300.00, 'Pending', '2025-09-01', 0),
-(2, 1, 200.00, 'Pending', '2025-09-01', 0),
-(3, 1, 120.00, 'Pending', '2025-09-01', 0),
-(4, 1, 270.00, 'Pending', '2025-09-01', 0),
-(5, 1, 150.00, 'Pending', '2025-09-01', 0),
-(6, 1004, 350.00, 'Pending', '2025-09-02', 0),
-(7, 1004, 100.00, 'Pending', '2025-09-02', 0),
-(8, 1004, 300.00, 'Pending', '2025-09-02', 0),
-(9, 1004, 300.00, 'Pending', '2025-09-02', 0);
+INSERT INTO `orders` (`OrderID`, `Customer_ID`, `Cost`, `Status`, `Date`) VALUES
+(1, 1, 300.00, 'Pending', '2025-09-01'),
+(2, 1, 200.00, 'Pending', '2025-09-01'),
+(3, 1, 120.00, 'Pending', '2025-09-01'),
+(4, 1, 270.00, 'Pending', '2025-09-01'),
+(5, 1, 150.00, 'Pending', '2025-09-01'),
+(6, 1004, 350.00, 'Pending', '2025-09-02'),
+(7, 1004, 100.00, 'Pending', '2025-09-02'),
+(8, 1004, 300.00, 'Pending', '2025-09-02'),
+(9, 1004, 300.00, 'Pending', '2025-09-02');
 
 -- --------------------------------------------------------
 
