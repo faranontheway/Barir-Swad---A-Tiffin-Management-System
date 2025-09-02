@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2025 at 06:09 PM
+-- Generation Time: Sep 01, 2025 at 07:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -102,7 +102,9 @@ CREATE TABLE `orders` (
 
 CREATE TABLE `orders_have_meal` (
   `M_ID` int(10) NOT NULL,
-  `OrderID` int(10) NOT NULL
+  `OrderID` int(10) NOT NULL,
+  `Price` decimal(10,2) NOT NULL,
+  `Quantity` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -128,10 +130,39 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`U_ID`, `Email`, `Exp_Years`, `Name`, `Address`, `Type`, `Password`) VALUES
 (1, 'mehjabin.hasan@gmail.com', 11, 'Mehjabin Hasan', '3/B Selpark, Mirpur', 'Cook', 'mou1111'),
 (2, 'araf.cooker@gmail.com', 3, 'Araf Rakib', 'Sec-4, Uttara, Dhaka', 'Cook', 'araf4200'),
+(3, 'cr7@gmail.com', 0, 'cr7', 'lisbon, portugal', 'Cook', 'cr71234'),
 (101, 'admin101@gmail.com', 0, 'Admin01', '34/d Baily Road, Dhaka', 'Admin', 'admin123'),
 (1001, 'farhan.zahin@gmail.com', 0, 'Farhan Zahin', '7/A Banasree, Dhaka', 'Customer', 'fz1234'),
 (1002, 'ahona.hasan@gmail.com', 0, 'Ahona Hasan', '33/c Banani, Dhaka', 'Customer', 'ahona1234'),
-(1003, 'jungkook@gmail.com', 0, 'Jung Kook', '16/f Gulshan-1, Dhaka', 'Customer', 'kook97');
+(1003, 'jungkook@gmail.com', 0, 'Jung Kook', '16/f Gulshan-1, Dhaka', 'Customer', 'kook97'),
+(1004, 'messi@gmail.com', 0, 'messi', 'argentina, rosario', 'Customer', '123456'),
+(1005, 'fz2008@gmail.com', 0, 'zayma', 'banasree, dhaka', 'Customer', 'fz2008');
+
+--
+-- Triggers `user`
+--
+DELIMITER $$
+CREATE TRIGGER `auto_assign_user_id` BEFORE INSERT ON `user` FOR EACH ROW BEGIN
+    DECLARE next_user_id INT DEFAULT 0;
+    
+    -- Only assign ID if it's not provided (0 or NULL)
+    IF NEW.U_ID IS NULL OR NEW.U_ID = 0 THEN
+        -- Get the next ID for this user type
+        SELECT next_id INTO next_user_id 
+        FROM user_id_tracker 
+        WHERE user_type = NEW.Type;
+        
+        -- Assign the ID
+        SET NEW.U_ID = next_user_id;
+        
+        -- Update the tracker for next time
+        UPDATE user_id_tracker 
+        SET next_id = next_id + 1 
+        WHERE user_type = NEW.Type;
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -158,6 +189,26 @@ INSERT INTO `user_cooks_meal` (`Cook_ID`, `Meal_ID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_id_tracker`
+--
+
+CREATE TABLE `user_id_tracker` (
+  `user_type` enum('Cook','Customer','Admin') NOT NULL,
+  `next_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_id_tracker`
+--
+
+INSERT INTO `user_id_tracker` (`user_type`, `next_id`) VALUES
+('Cook', 4),
+('Customer', 1006),
+('Admin', 102);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_phone_no`
 --
 
@@ -171,9 +222,12 @@ CREATE TABLE `user_phone_no` (
 --
 
 INSERT INTO `user_phone_no` (`User_ID`, `Phone_No`) VALUES
+(3, 1752537282),
 (1001, 1552306466),
 (1002, 1316733425),
-(1003, 1635895385);
+(1003, 1635895385),
+(1004, 1652537282),
+(1005, 1762537282);
 
 --
 -- Indexes for dumped tables
@@ -227,11 +281,27 @@ ALTER TABLE `user_cooks_meal`
   ADD KEY `meal_cook_fk` (`Meal_ID`);
 
 --
+-- Indexes for table `user_id_tracker`
+--
+ALTER TABLE `user_id_tracker`
+  ADD PRIMARY KEY (`user_type`);
+
+--
 -- Indexes for table `user_phone_no`
 --
 ALTER TABLE `user_phone_no`
   ADD PRIMARY KEY (`Phone_No`),
   ADD KEY `user_phone_fk` (`User_ID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `OrderID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
