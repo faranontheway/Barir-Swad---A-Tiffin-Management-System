@@ -18,13 +18,12 @@ $recent_orders_sql = "
         o.Cost, 
         o.Status, 
         o.Date,
-        o.`Catering Service`,
         GROUP_CONCAT(m.Name SEPARATOR ', ') as Meals
     FROM orders o
     LEFT JOIN orders_have_meal ohm ON o.OrderID = ohm.OrderID
     LEFT JOIN meal m ON ohm.M_ID = m.Meal_ID
     WHERE o.Customer_ID = ?
-    GROUP BY o.OrderID, o.Cost, o.Status, o.Date, o.`Catering Service`
+    GROUP BY o.OrderID, o.Cost, o.Status, o.Date
     ORDER BY o.Date DESC
     LIMIT 20
 ";
