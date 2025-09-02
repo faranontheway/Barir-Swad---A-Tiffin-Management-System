@@ -50,13 +50,12 @@ $sql = "
         o.Cost, 
         o.Status, 
         o.Date,
-        o.`Catering Service`,
         GROUP_CONCAT(m.Name SEPARATOR ', ') as Meals
     FROM orders o
     JOIN user u ON o.Customer_ID = u.U_ID
     LEFT JOIN orders_have_meal ohm ON o.OrderID = ohm.OrderID
     LEFT JOIN meal m ON ohm.M_ID = m.Meal_ID
-    GROUP BY o.OrderID, u.Name, u.Email, o.Cost, o.Status, o.Date, o.`Catering Service`
+    GROUP BY o.OrderID, u.Name, u.Email, o.Cost, o.Status, o.Date
     ORDER BY o.Date DESC, o.OrderID DESC
 ";
 
@@ -197,7 +196,7 @@ $orders_result = $conn->query($sql);
 <body>
     <header class="admin-header">
         <div class="admin-nav">
-            <h1>ðŸ± Barir Swad - Order Management</h1>
+            <h1>📋 Barir Swad - Order Management</h1>
             <nav class="nav-links">
                 <a href="admin_dashboard.php">Dashboard</a>
                 <a href="admin_orders.php" class="active">Orders</a>
@@ -234,18 +233,13 @@ $orders_result = $conn->query($sql);
                     <tbody>
                         <?php while($order = $orders_result->fetch_assoc()): ?>
                             <tr>
-                                <td>
-                                    <strong>#<?= $order['OrderID'] ?></strong>
-                                    <?php if ($order['Catering Service']): ?>
-                                        <br><span class="catering-badge">CATERING</span>
-                                    <?php endif; ?>
-                                </td>
+                                <td>#<?= $order['OrderID'] ?></td>
                                 <td><?= htmlspecialchars($order['Customer']) ?></td>
                                 <td><?= htmlspecialchars($order['Email']) ?></td>
                                 <td class="meals-list">
                                     <?= $order['Meals'] ? htmlspecialchars($order['Meals']) : 'No meals' ?>
                                 </td>
-                                <td><strong>à§³<?= number_format($order['Cost'], 2) ?></strong></td>
+                                <td><strong>৳<?= number_format($order['Cost'], 2) ?></strong></td>
                                 <td>
                                     <span class="status <?= strtolower(str_replace(' ', '-', $order['Status'])) ?>">
                                         <?= $order['Status'] ?>
