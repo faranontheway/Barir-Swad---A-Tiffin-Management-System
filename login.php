@@ -64,14 +64,22 @@ if ($_POST && isset($_POST['register'])) {
     } else {
         $conn->begin_transaction();
         try {
-            // Insert user
+            // Insert user (U_ID will be auto-assigned by trigger)
+            // Don't specify U_ID in the INSERT statement - let the trigger handle it
             $sql = "INSERT INTO user (Name, Email, Password, Address, Type, Exp_Years) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $exp_years = 0;
             $stmt->bind_param("sssssi", $name, $email, $password, $address, $type, $exp_years);
             $stmt->execute();
             
-            $user_id = $conn->insert_id;
+            // Get the auto-assigned user ID
+            $get_id_sql = "SELECT U_ID FROM user WHERE Email = ? AND Name = ? ORDER BY U_ID DESC LIMIT 1";
+            $get_id_stmt = $conn->prepare($get_id_sql);
+            $get_id_stmt->bind_param("ss", $email, $name);
+            $get_id_stmt->execute();
+            $id_result = $get_id_stmt->get_result();
+            $user_data = $id_result->fetch_assoc();
+            $user_id = $user_data['U_ID'];
             
             // Insert phone number if provided
             if (!empty($phone)) {
@@ -103,7 +111,7 @@ if ($_POST && isset($_POST['register'])) {
             
         } catch (Exception $e) {
             $conn->rollback();
-            $message = "Registration failed. Please try again.";
+            $message = "Registration failed. Please try again. Error: " . $e->getMessage();
         }
     }
 }
@@ -309,7 +317,7 @@ if ($_POST && isset($_POST['register'])) {
                     <input type="text" id="reg-address" name="address">
                 </div>
                 <div class="form-group">
-                    <label for="reg-phone">Phone (Optional)</label>
+                    <label for="reg-phone">Phone</label>
                     <input type="number" id="reg-phone" name="phone">
                 </div>
                 <button type="submit" name="register" class="btn">Register</button>
