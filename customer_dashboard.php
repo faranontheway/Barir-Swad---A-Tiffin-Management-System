@@ -59,7 +59,7 @@ $popular_meals = $conn->query("
     LEFT JOIN orders_have_meal ohm ON m.Meal_ID = ohm.M_ID
     GROUP BY m.Meal_ID, m.Name, m.Description, m.`Pricing`, m.Cuisine
     ORDER BY order_count DESC, m.Name
-    LIMIT 6
+    LIMIT 50
 ");
 ?>
 
@@ -389,8 +389,8 @@ $popular_meals = $conn->query("
             <nav class="nav-links">
                 <a href="customer_dashboard.php">Dashboard</a>
                 <a href="meal.php">Browse Meals</a>
-                <a href="view_cart.php" class="cart-indicator">
-                    Cart
+                <a href="view_cart.php" class="cart-indicator">Cart</a>
+                <a href="customer_catering.php">Catering Services</a>
                     <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
                         <span class="cart-count"><?= count($_SESSION['cart']) ?></span>
                     <?php endif; ?>
