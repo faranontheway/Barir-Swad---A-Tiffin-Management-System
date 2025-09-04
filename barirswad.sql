@@ -88,17 +88,37 @@ CREATE TABLE `complaint_support` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer_rates_cooks`
+-- Table structure for table `customer_rates_cooks` (Enhanced Review System)
 --
 
 CREATE TABLE `customer_rates_cooks` (
-  `ReviewID` int(11) NOT NULL,
+  `Review_ID` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `CustomerID` int(11) NOT NULL,
   `CookID` int(11) NOT NULL,
-  `Rating` decimal(2,1) DEFAULT NULL CHECK (`Rating` >= 1 and `Rating` <= 5),
-  `Comment` text DEFAULT NULL,
-  `Created_At` timestamp NOT NULL DEFAULT current_timestamp()
+  `Order_ID` int(10) DEFAULT NULL,
+  `Rating` decimal(2,1) NOT NULL CHECK (`Rating` >= 1.0 AND `Rating` <= 5.0),
+  `Review_Title` varchar(100) NOT NULL DEFAULT 'Review',
+  `Comment` text NOT NULL,
+  `Food_Quality_Rating` decimal(2,1) DEFAULT NULL,
+  `Service_Rating` decimal(2,1) DEFAULT NULL,
+  `Would_Recommend` tinyint(1) DEFAULT 1,
+  `Status` enum('Active','Hidden','Reported') NOT NULL DEFAULT 'Active',
+  `Admin_Notes` text DEFAULT NULL,
+  `Created_Date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Updated_Date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  KEY `order_review_fk` (`Order_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping sample review data for table `customer_rates_cooks`
+--
+
+INSERT INTO `customer_rates_cooks` (`CustomerID`, `CookID`, `Order_ID`, `Rating`, `Review_Title`, `Comment`, `Food_Quality_Rating`, `Service_Rating`, `Would_Recommend`) VALUES
+(1001, 1, NULL, 4.5, 'Excellent Bengali Food', 'The Vorta Thali was absolutely delicious! Authentic flavors and perfectly cooked. Mehjabin is a talented cook.', 4.5, 4.0, 1),
+(1002, 1, NULL, 5.0, 'Outstanding Experience', 'Amazing Korean food! The ramen was perfect and the service was excellent. Highly recommended!', 5.0, 5.0, 1),
+(1003, 2, NULL, 3.5, 'Good but could be better', 'The Indian thali was good but the curry was a bit too spicy for my taste. Overall decent experience.', 3.5, 4.0, 1),
+(1001, 2, NULL, 4.0, 'Great Burmese Cuisine', 'Enjoyed the Myanmar curry very much. Authentic taste and good presentation. Will order again!', 4.0, 4.5, 1),
+(1004, 1, NULL, 2.5, 'Below Expectations', 'The food was okay but not as described. Expected better quality for the price.', 2.5, 3.0, 0);
 
 -- --------------------------------------------------------
 
@@ -305,6 +325,30 @@ INSERT INTO `user_phone_no` (`User_ID`, `Phone_No`) VALUES
 (1002, 1316733425),
 (1003, 1635895385);
 
+-- --------------------------------------------------------
+
+--
+-- View structure for view `cook_ratings_summary`
+--
+
+CREATE VIEW `cook_ratings_summary` AS
+SELECT 
+    c.U_ID as Cook_ID,
+    c.Name as Cook_Name,
+    c.Email as Cook_Email,
+    c.Exp_Years,
+    COUNT(r.Review_ID) as Total_Reviews,
+    ROUND(AVG(r.Rating), 1) as Average_Rating,
+    ROUND(AVG(r.Food_Quality_Rating), 1) as Avg_Food_Quality,
+    ROUND(AVG(r.Service_Rating), 1) as Avg_Service_Rating,
+    COUNT(CASE WHEN r.Would_Recommend = 1 THEN 1 END) as Recommend_Count,
+    ROUND((COUNT(CASE WHEN r.Would_Recommend = 1 THEN 1 END) * 100.0 / COUNT(r.Review_ID)), 1) as Recommend_Percentage,
+    MAX(r.Created_Date) as Last_Review_Date
+FROM user c
+LEFT JOIN customer_rates_cooks r ON c.U_ID = r.CookID
+WHERE c.Type = 'Cook'
+GROUP BY c.U_ID, c.Name, c.Email, c.Exp_Years;
+
 --
 -- Indexes for dumped tables
 --
@@ -334,7 +378,6 @@ ALTER TABLE `complaint_support`
 -- Indexes for table `customer_rates_cooks`
 --
 ALTER TABLE `customer_rates_cooks`
-  ADD PRIMARY KEY (`ReviewID`),
   ADD KEY `cook_rate_fk` (`CookID`),
   ADD KEY `customer_rate_fk` (`CustomerID`);
 
@@ -398,7 +441,7 @@ ALTER TABLE `catering_services`
 -- AUTO_INCREMENT for table `customer_rates_cooks`
 --
 ALTER TABLE `customer_rates_cooks`
-  MODIFY `ReviewID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Review_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -434,7 +477,8 @@ ALTER TABLE `complaint_support`
 --
 ALTER TABLE `customer_rates_cooks`
   ADD CONSTRAINT `cook_rate_fk` FOREIGN KEY (`CookID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `customer_rate_fk` FOREIGN KEY (`CustomerID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `customer_rate_fk` FOREIGN KEY (`CustomerID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_review_fk` FOREIGN KEY (`Order_ID`) REFERENCES `orders` (`OrderID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`
