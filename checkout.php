@@ -105,7 +105,8 @@ unset($_SESSION['cart']);
     <p>Your Order ID is: <strong><?php echo $order_id; ?></strong></p>
     <p>Total Amount: ৳ <?php echo number_format($grand_total, 2); ?></p>
     <a href="meal.php">🍴 Go Back to Menu</a>
-    <a href="customer_dashboard.php">🏠 My Dashboard</a>
+    <a href="customer_dashboard.php">🏠 Go Back to Dashboard</a>
   </div>
 </body>
 </html>
+
