@@ -81,6 +81,7 @@ $recent_users = $conn->query("
                 <a href="admin_users.php">Users</a>
                 <a href="admin_meals.php">Meals</a>
                 <a href="admin_catering.php">Catering</a>
+                <a href="cook_ratings.php">Reviews</a>
                 <a href="admin_complaints.php">Complaints</a>
                 <a href="admin_logout.php" class="logout-btn">Logout</a>
             </nav>
