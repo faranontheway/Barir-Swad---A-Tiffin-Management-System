@@ -245,3 +245,13 @@ form {
     margin-bottom: 15px;
     border: 1px solid #d60000;
 }
+
+.input-box .toggle-password {
+    position: absolute;
+    right: 45px;  /* place it before the lock icon */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+}

@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="logo">🥘Barir Swad</div>
         <nav class="nav-links">
             <a href="cook_dashboard.php" class="btn">Dashboard</a>
-            <a href="admin_logout.php" class="btn logout">Logout</a>
+            <a href="../logout.php" class="btn logout">Logout</a>
         </nav>
     </div>
 </header>

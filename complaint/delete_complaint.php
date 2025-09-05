@@ -1,36 +1,41 @@
 <?php
 session_start();
-require_once "config.php";
+require '../dbconnect.php';
 
-if (!isset($_SESSION['User_ID'])) {
-    header("Location: login.php");
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login.php");
     exit();
 }
+$user_id = $_SESSION['user_id'];
 
-$user_id = $_SESSION['User_ID'];
+// Get the complaint ID from the URL
+if (!isset($_GET['id'])) {
+    header("Location: complaint_dashboard.php"); // redirect if no ID
+    exit();
+}
+$complaint_id = intval($_GET['id']);
 
-// Validate complaint ID
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    $_SESSION['message'] = "Invalid complaint ID.";
-    $_SESSION['msg_type'] = "error";
+// Verify the complaint belongs to the logged-in user
+$sql = "SELECT * FROM complaint_support WHERE Complaint_ID = ? AND User_ID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $complaint_id, $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    // Complaint not found or does not belong to user
     header("Location: complaint_dashboard.php");
     exit();
 }
 
-$complaint_id = (int) $_GET['id'];
+// Delete the complaint
+$delete_sql = "DELETE FROM complaint_support WHERE Complaint_ID = ? AND User_ID = ?";
+$delete_stmt = $conn->prepare($delete_sql);
+$delete_stmt->bind_param("ii", $complaint_id, $user_id);
+$delete_stmt->execute();
 
-// Check ownership before deleting
-$sql = "DELETE FROM complaint_support WHERE Complaint_ID = ? AND User_ID = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $complaint_id, $user_id);
-
-if ($stmt->execute() && $stmt->affected_rows > 0) {
-    $_SESSION['message'] = "Complaint deleted successfully.";
-    $_SESSION['msg_type'] = "success";
-} else {
-    $_SESSION['message'] = "Complaint not found or access denied.";
-    $_SESSION['msg_type'] = "error";
-}
-
-header("Location: complaint_dashboard.php");
+// Redirect back to complaint dashboard
+header("Location: complaint_dashboard.php?deleted=1");
 exit();
+?>

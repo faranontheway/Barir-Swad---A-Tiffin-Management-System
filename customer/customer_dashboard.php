@@ -397,7 +397,7 @@ $popular_meals = $conn->query("
                 </a>
                 <a href="../complaint/complaint_dashboard.php">Complaint</a>
                 <span>Welcome, <?= htmlspecialchars($customer_name) ?>!</span>
-                <a href="admin_logout.php" class="btn logout">Logout</a>
+                <a href="../logout.php" class="btn logout">Logout</a>
             </nav>
         </div>
     </header>

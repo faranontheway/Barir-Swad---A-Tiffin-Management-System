@@ -157,7 +157,7 @@ if ($_POST && isset($_POST['register'])) {
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" name="password" required>
+                    <input type="password" placeholder="Password" name="password" id="loginPassword" required>
                     <i class='bx bxs-lock-alt'></i>
                 </div>
                 <button type="submit" class="btn" name="login">Login</button> 

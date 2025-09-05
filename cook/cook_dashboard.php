@@ -60,7 +60,6 @@ $stats['total_earned'] = $result->fetch_assoc()['total'] ?? 0;
     <div class="nav">
         <div class="logo">🥘Barir Swad</div>
         <nav class="nav-links">
-            <a class="btn" href="cook_dashboard.php">Dashboard</a>
             <a class="btn" href="../complaint/complaint_dashboard.php">Complaint</a>
             <a href="../logout.php" class="btn logout">Logout</a>
         </nav>
