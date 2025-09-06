@@ -1,0 +1,854 @@
+/* ===============================
+   UNIFIED THEME STYLES - Based on meal_styles.css
+   =============================== */
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #fffaf2;
+    min-height: 100vh;
+}
+
+/* ===============================
+   HEADER & NAVIGATION
+   =============================== */
+.header, .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #d35400;
+    color: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav, .admin-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.logo {
+    font-family: 'DynaPuff', cursive, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: white;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: transform 0.3s;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-links a, .navbar nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.nav-links a:hover, .navbar nav a:hover,
+.nav-links a.active {
+    background: rgba(255,255,255,0.2);
+}
+
+.nav-links .btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.logout-btn, .nav-links .logout {
+    background: #c0392b;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.logout-btn:hover, .nav-links .logout:hover {
+    background: #a93226;
+}
+
+/* Admin Header Variations */
+.admin-header {
+    background: #d35400;
+    color: white;
+    padding: 15px 0;
+    margin-bottom: 30px;
+}
+
+/* ===============================
+   HERO SECTIONS
+   =============================== */
+.hero, .welcome-section, .page-header, .catering-hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #ffe5b4, #ffcc99);
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.catering-hero {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                linear-gradient(135deg, #ffe5b4, #ffcc99);
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.hero h1, .welcome-section h1, .page-header h1, .catering-hero h1 {
+    font-size: 2.5em;
+    color: #d35400;
+    margin-bottom: 20px;
+}
+
+.catering-hero h1 {
+    color: white;
+    font-size: 48px;
+}
+
+.hero p, .welcome-section p, .catering-hero p {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #666;
+}
+
+.catering-hero p {
+    color: white;
+    font-size: 20px;
+    max-width: 600px;
+}
+
+/* ===============================
+   BUTTONS
+   =============================== */
+.btn, button, .submit-btn, .btn-catering {
+    background: #d35400;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn:hover, button:hover, .submit-btn:hover, .btn-catering:hover {
+    background: #a63e00;
+    transform: translateY(-2px);
+}
+
+/* Button Variations */
+.btn-primary { background: #d35400; }
+.btn-primary:hover { background: #a63e00; }
+
+.btn-success, .btn-order { background: #27ae60; }
+.btn-success:hover, .btn-order:hover { background: #229954; }
+
+.btn-danger { background: #e74c3c; }
+.btn-danger:hover { background: #c0392b; }
+
+.btn-warning { background: #f39c12; color: #212529; }
+.btn-warning:hover { background: #e67e22; }
+
+.btn-secondary { background: #95a5a6; }
+.btn-secondary:hover { background: #7f8c8d; }
+
+.btn-sm, .btn.small {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+}
+
+/* ===============================
+   CONTAINERS & SECTIONS
+   =============================== */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.menu-section, .services-section {
+    padding: 40px 20px;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===============================
+   CARDS & GRIDS
+   =============================== */
+.stats-grid, .stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card h3 {
+    color: #666;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.stat-card .number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #d35400;
+    margin: 10px 0;
+}
+
+.stat-card.money .number {
+    color: #27ae60;
+}
+
+/* Meal Cards */
+.meal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.meal-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.meal-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.meal-card h3, .meal-card h4 {
+    margin-top: 0;
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.meal-photo {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.price, .meal-price {
+    font-weight: bold;
+    color: #d35400;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.meal-cuisine, .cuisine-badge, .cuisine-tag {
+    background: #d35400;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Service Cards */
+.services-grid, .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.service-card, .package-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.service-card:hover, .package-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card h3 {
+    color: #d35400;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.package-price {
+    color: #d35400;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+/* ===============================
+   FORMS
+   =============================== */
+.form-container, .booking-section, .add-meal-section,
+.review-form-section, .profile-form, .complaint-card.form-narrow {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin: 30px auto;
+    max-width: 800px;
+}
+
+.booking-form, .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group, .form-group-full {
+    margin-bottom: 20px;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #d35400;
+}
+
+.form-group textarea, textarea, #description {
+    min-height: 80px;
+    resize: vertical;
+}
+
+#description {
+    height: 120px;
+}
+
+/* ===============================
+   TABLES
+   =============================== */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.reviews-table, .catering-table, .meals-table,
+.orders-table, .users-table {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.table th {
+    background: #f8f9fa;
+    padding: 15px 10px;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: top;
+    font-size: 14px;
+}
+
+.table tr:hover {
+    background: #f8f9fa;
+}
+
+/* ===============================
+   STATUS BADGES
+   =============================== */
+.status, .status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+}
+
+/* Order Status */
+.status.pending, .status-pending { background: #f39c12; color: #212529; }
+.status.accepted, .status-accepted { background: #3498db; }
+.status.on-the-way { background: #27ae60; }
+.status.delivered { background: #8e44ad; }
+.status.cancelled { background: #e74c3c; }
+
+/* Review Status */
+.status.active { background: #27ae60; }
+.status.hidden { background: #95a5a6; }
+.status.reported { background: #e74c3c; }
+
+/* Catering Status */
+.status.confirmed { background: #27ae60; }
+.status.in-progress, .status-inprogress { background: #3498db; }
+.status.completed { background: #8e44ad; }
+.status.resolved, .status-resolved { background: #27ae60; }
+.status.rejected, .status-rejected { background: #95a5a6; }
+
+/* Payment Status */
+.payment-status, .payment-badge {
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.payment-status.pending, .payment-badge.pending { 
+    background: #f39c12; color: #212529; 
+}
+.payment-status.partial, .payment-badge.partial { 
+    background: #3498db; color: white; 
+}
+.payment-status.full, .payment-badge.full { 
+    background: #27ae60; color: white; 
+}
+
+/* User Types */
+.user-type {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.user-type.customer { background: #3498db; color: white; }
+.user-type.cook { background: #d35400; color: white; }
+
+/* ===============================
+   COMPLAINT STYLES
+   =============================== */
+.complaint-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.complaint-card:hover {
+    transform: translateY(-3px);
+}
+
+.complaint-card.no-hover:hover {
+    transform: none;
+}
+
+.complaint-card h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: #333;
+}
+
+.complaint-meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.view-card {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ===============================
+   REVIEWS & RATINGS
+   =============================== */
+.review-card {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.rating-display, .review-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stars {
+    color: #f39c12;
+    font-size: 14px;
+}
+
+.main-rating {
+    font-size: 48px;
+    font-weight: bold;
+    color: #f39c12;
+    margin-bottom: 10px;
+}
+
+/* ===============================
+   PROFILE SECTIONS
+   =============================== */
+.profile-header {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.profile-avatar, .cook-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffe5b4, #ffcc99);
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: #d35400;
+}
+
+.cook-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+}
+
+/* ===============================
+   DASHBOARD SECTIONS
+   =============================== */
+.dashboard-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.section-card, .section-title {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.section-card h3 {
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 3px solid #d35400;
+    padding-bottom: 10px;
+}
+
+/* ===============================
+   MESSAGES & ALERTS
+   =============================== */
+.message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.message, .message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error, .message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ===============================
+   DELIVERY MANAGEMENT
+   =============================== */
+.delivery-card {
+    background: white;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.delivery-card:hover {
+    transform: translateY(-2px);
+}
+
+.delivery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.order-id {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d35400;
+}
+
+.priority {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #f39c12;
+    color: #212529;
+}
+
+.customer-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    border-left: 4px solid #d35400;
+}
+
+.customer-info h4 {
+    color: #d35400;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.customer-info p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.no-deliveries {
+    text-align: center;
+    color: #666;
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.no-deliveries h3 {
+    color: #d35400;
+    margin-bottom: 10px;
+}
+
+/* ===============================
+   MISCELLANEOUS
+   =============================== */
+.quick-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.cart-indicator {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-data, .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 16px;
+    color: #666;
+    background: white;
+    border-radius: 10px;
+    margin-top: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.pricing-info {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.pricing-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+}
+
+.feature-icon {
+    color: #27ae60;
+    font-size: 18px;
+}
+
+/* ===============================
+   RESPONSIVE DESIGN
+   =============================== */
+@media (max-width: 768px) {
+    .dashboard-sections,
+    .review-sections,
+    .profile-sections {
+        grid-template-columns: 1fr;
+    }
+    
+    .booking-form,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid,
+    .stats-cards {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+    }
+    
+    .hero h1,
+    .welcome-section h1,
+    .catering-hero h1 {
+        font-size: 2em;
+    }
+    
+    .catering-hero p {
+        font-size: 16px;
+    }
+    
+    .nav-links {
+        gap: 10px;
+    }
+    
+    .nav-links a {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .meal-grid,
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero,
+    .welcome-section,
+    .page-header {
+        padding: 40px 15px;
+    }
+}
