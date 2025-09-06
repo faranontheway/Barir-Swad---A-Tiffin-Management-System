@@ -65,6 +65,7 @@ function getStatusClass($status) {
 <title>Admin View Complaint</title>
 <link rel="stylesheet" href="../assets/css/cook_styles.css">
 <link rel="stylesheet" href="../assets/css/complaint_styles.css">
+<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Permanent+Marker&display=swap" rel="stylesheet">
 </head>
 <body>
 <header class="header">

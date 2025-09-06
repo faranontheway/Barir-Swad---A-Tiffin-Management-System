@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2025 at 09:15 PM
+-- Generation Time: Sep 05, 2025 at 06:30 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -82,7 +82,7 @@ CREATE TABLE `complaint_support` (
   `Description` text NOT NULL,
   `Status` enum('Open','In Progress','Resolved','Closed') NOT NULL DEFAULT 'Open',
   `Submitted_Date` date NOT NULL,
-  `Messages` text DEFAULT NULL
+  `Messages` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -90,7 +90,46 @@ CREATE TABLE `complaint_support` (
 --
 
 INSERT INTO `complaint_support` (`User_ID`, `Complaint_ID`, `Description`, `Status`, `Submitted_Date`, `Messages`) VALUES
-(1002, 1, 'Food was Cold. The cook is quite unprofessional. But the food quality was top notch and I was satisfied. But I think he should have charged less money. But then again cold food is never feels good to eat. Next time if this happens I will leave this site.', 'Open', '2025-06-15', NULL);
+(3, 8262, 'ORDER_ASSIGNMENT', 'In Progress', '2025-09-05', '{\"order_id\":\"13\",\"cook_id\":3,\"assigned_date\":\"2025-09-05 17:39:06\"}'),
+(1, 9100, 'NOTIFICATION: New Order Available!', 'Open', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #12 worth \\u09f3750.00. Meals: Murgi Thali x5. Click to accept this order!\",\"related_id\":12,\"type\":\"order_notification\"}'),
+(1, 9239, 'NOTIFICATION: New Order Available!', 'In Progress', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer tahmid placed order #15 worth \\u09f31,200.00. Meals: Bengali Mach Thali x2. Click to accept this order!\",\"related_id\":15,\"type\":\"order_notification\"}'),
+(1005, 9298, 'NOTIFICATION: Order Accepted!', 'Open', '2025-09-05', '{\"title\":\"Order Accepted!\",\"message\":\"Cook rahim hasan has accepted your order #15 and will start preparing it soon.\",\"related_id\":\"15\",\"type\":\"notification\"}'),
+(1, 9397, 'NOTIFICATION: New Order Available!', 'Open', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #13 worth \\u09f3100.00. Meals: Vorta Thali x1. Click to accept this order!\",\"related_id\":13,\"type\":\"order_notification\"}'),
+(3, 9498, 'ORDER_ASSIGNMENT', 'In Progress', '2025-09-05', '{\"order_id\":\"15\",\"cook_id\":3,\"assigned_date\":\"2025-09-05 17:58:47\"}'),
+(2, 9609, 'NOTIFICATION: New Order Available!', 'Open', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer tahmid placed order #15 worth \\u09f31,200.00. Meals: Bengali Mach Thali x2. Click to accept this order!\",\"related_id\":15,\"type\":\"order_notification\"}'),
+(3, 9933, 'NOTIFICATION: New Order Available!', 'Open', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #14 worth \\u09f3300.00. Meals: Burmese Thali x1. Click to accept this order!\",\"related_id\":14,\"type\":\"order_notification\"}'),
+(1005, 10562, 'NOTIFICATION: Order Accepted!', 'Open', '2025-09-05', '{\"title\":\"Order Accepted!\",\"message\":\"Cook Mehjabin Hasan has accepted your order #15 and will start preparing it soon.\",\"related_id\":\"15\",\"type\":\"notification\"}'),
+(3, 10805, 'NOTIFICATION: New Order Available!', 'In Progress', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer tahmid placed order #15 worth \\u09f31,200.00. Meals: Bengali Mach Thali x2. Click to accept this order!\",\"related_id\":15,\"type\":\"order_notification\"}'),
+(3, 11350, 'NOTIFICATION: New Order Available!', 'In Progress', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #12 worth \\u09f3750.00. Meals: Murgi Thali x5. Click to accept this order!\",\"related_id\":12,\"type\":\"order_notification\"}'),
+(1, 12078, 'NOTIFICATION: New Order Available!', 'Open', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #14 worth \\u09f3300.00. Meals: Burmese Thali x1. Click to accept this order!\",\"related_id\":14,\"type\":\"order_notification\"}'),
+(3, 12292, 'ORDER_ASSIGNMENT', 'In Progress', '2025-09-05', '{\"order_id\":\"12\",\"cook_id\":3,\"assigned_date\":\"2025-09-05 17:39:02\"}'),
+(1001, 13681, 'NOTIFICATION: Order Accepted!', 'Open', '2025-09-05', '{\"title\":\"Order Accepted!\",\"message\":\"Cook rahim hasan has accepted your order #12 and will start preparing it soon.\",\"related_id\":\"12\",\"type\":\"notification\"}'),
+(1001, 13729, 'NOTIFICATION: Order Accepted!', 'Open', '2025-09-05', '{\"title\":\"Order Accepted!\",\"message\":\"Cook rahim hasan has accepted your order #13 and will start preparing it soon.\",\"related_id\":\"13\",\"type\":\"notification\"}'),
+(2, 15105, 'NOTIFICATION: New Order Available!', 'Open', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #13 worth \\u09f3100.00. Meals: Vorta Thali x1. Click to accept this order!\",\"related_id\":13,\"type\":\"order_notification\"}'),
+(1, 15469, 'ORDER_ASSIGNMENT', 'In Progress', '2025-09-05', '{\"order_id\":\"15\",\"cook_id\":1,\"assigned_date\":\"2025-09-05 18:02:03\"}'),
+(3, 16692, 'NOTIFICATION: New Order Available!', 'In Progress', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #13 worth \\u09f3100.00. Meals: Vorta Thali x1. Click to accept this order!\",\"related_id\":13,\"type\":\"order_notification\"}'),
+(2, 18110, 'NOTIFICATION: New Order Available!', 'Open', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #14 worth \\u09f3300.00. Meals: Burmese Thali x1. Click to accept this order!\",\"related_id\":14,\"type\":\"order_notification\"}'),
+(2, 18767, 'NOTIFICATION: New Order Available!', 'Open', '2025-09-05', '{\"title\":\"New Order Available!\",\"message\":\"Customer Farhan Zahin placed order #12 worth \\u09f3750.00. Meals: Murgi Thali x5. Click to accept this order!\",\"related_id\":12,\"type\":\"order_notification\"}');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `cook_ratings_summary`
+-- (See below for the actual view)
+--
+CREATE TABLE `cook_ratings_summary` (
+`Cook_ID` int(10)
+,`Cook_Name` varchar(100)
+,`Cook_Email` varchar(50)
+,`Exp_Years` int(50)
+,`Total_Reviews` bigint(21)
+,`Average_Rating` decimal(3,1)
+,`Avg_Food_Quality` decimal(3,1)
+,`Avg_Service_Rating` decimal(3,1)
+,`Recommend_Count` bigint(21)
+,`Recommend_Percentage` decimal(25,1)
+,`Last_Review_Date` timestamp
+);
 
 -- --------------------------------------------------------
 
@@ -99,13 +138,33 @@ INSERT INTO `complaint_support` (`User_ID`, `Complaint_ID`, `Description`, `Stat
 --
 
 CREATE TABLE `customer_rates_cooks` (
-  `ReviewID` int(11) NOT NULL,
+  `Review_ID` int(10) NOT NULL,
   `CustomerID` int(11) NOT NULL,
   `CookID` int(11) NOT NULL,
-  `Rating` decimal(2,1) DEFAULT NULL CHECK (`Rating` >= 1 and `Rating` <= 5),
-  `Comment` text DEFAULT NULL,
-  `Created_At` timestamp NOT NULL DEFAULT current_timestamp()
+  `Order_ID` int(10) DEFAULT NULL,
+  `Rating` decimal(2,1) NOT NULL CHECK (`Rating` >= 1.0 and `Rating` <= 5.0),
+  `Review_Title` varchar(100) NOT NULL DEFAULT 'Review',
+  `Comment` text NOT NULL,
+  `Food_Quality_Rating` decimal(2,1) DEFAULT NULL,
+  `Service_Rating` decimal(2,1) DEFAULT NULL,
+  `Would_Recommend` tinyint(1) DEFAULT 1,
+  `Status` enum('Active','Hidden','Reported') NOT NULL DEFAULT 'Active',
+  `Admin_Notes` text DEFAULT NULL,
+  `Created_Date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Updated_Date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer_rates_cooks`
+--
+
+INSERT INTO `customer_rates_cooks` (`Review_ID`, `CustomerID`, `CookID`, `Order_ID`, `Rating`, `Review_Title`, `Comment`, `Food_Quality_Rating`, `Service_Rating`, `Would_Recommend`, `Status`, `Admin_Notes`, `Created_Date`, `Updated_Date`) VALUES
+(1, 1001, 1, NULL, 4.5, 'Excellent Bengali Food', 'The Vorta Thali was absolutely delicious! Authentic flavors and perfectly cooked. Mehjabin is a talented cook.', 4.5, 4.0, 1, 'Active', NULL, '2025-09-04 17:27:05', '2025-09-04 17:27:05'),
+(2, 1002, 1, NULL, 5.0, 'Outstanding Experience', 'Amazing Korean food! The ramen was perfect and the service was excellent. Highly recommended!', 5.0, 5.0, 1, 'Active', NULL, '2025-09-04 17:27:05', '2025-09-04 17:27:05'),
+(3, 1003, 2, NULL, 3.5, 'Good but could be better', 'The Indian thali was good but the curry was a bit too spicy for my taste. Overall decent experience.', 3.5, 4.0, 1, 'Active', NULL, '2025-09-04 17:27:05', '2025-09-04 17:27:05'),
+(4, 1001, 2, NULL, 4.0, 'Great Burmese Cuisine', 'Enjoyed the Myanmar curry very much. Authentic taste and good presentation. Will order again!', 4.0, 4.5, 1, 'Active', NULL, '2025-09-04 17:27:05', '2025-09-04 17:27:05'),
+(5, 1004, 1, NULL, 2.5, 'Below Expectations', 'The food was okay but not as described. Expected better quality for the price.', 2.5, 3.0, 0, 'Active', NULL, '2025-09-04 17:27:05', '2025-09-04 17:27:05'),
+(6, 1001, 1, 10, 5.0, 'Good ', 'food was good i love it', 4.5, 5.0, 1, 'Active', NULL, '2025-09-05 15:51:09', '2025-09-05 15:51:09');
 
 -- --------------------------------------------------------
 
@@ -119,23 +178,24 @@ CREATE TABLE `meal` (
   `Description` text NOT NULL,
   `Proportion` varchar(50) NOT NULL,
   `Pricing` decimal(10,2) NOT NULL,
-  `Cuisine` varchar(50) NOT NULL
+  `Cuisine` varchar(50) NOT NULL,
+  `Status` enum('Available','Takes Time','Unavailable') DEFAULT 'Takes Time'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `meal`
 --
 
-INSERT INTO `meal` (`Meal_ID`, `Name`, `Description`, `Proportion`, `Pricing`, `Cuisine`) VALUES
-(1, 'Murgi Thali', 'Rice, Chicken curry, Cashewnut Salad', '1:1', 150.00, 'Bengali'),
-(2, 'Vorta Thali', 'Aloo Vorta, Shutki Vorta, Potol Vorta, Begoon Vorta, Dim Vorta, Morich Vorta', '1:1', 100.00, 'Bengali'),
-(3, 'Indian Thali', 'Dosa, Sambar, Rayta, Pickle', '1:1', 120.00, 'Indian'),
-(4, 'Chinese Thali', 'Chowmein, Dim Sum, Fried Rice, Chili Chicken', '1:1', 200.00, 'Chinese'),
-(5, 'Korean Thali', 'Beef Ramen, Boiled eggs(x2), Dumplings', '1:1', 300.00, 'Korean'),
-(6, 'Burmese Thali', 'Myanmar Curry, Mohinga, Tea leaf Salad, Tofu', '1:1', 300.00, 'Burmese'),
-(7, 'Italian Thali', 'Prawn Spaghetti, Tiramisu, Margherita Pizza', '1:1', 500.00, 'Italian'),
-(8, 'Veg Thali', 'Veg Biriyani, Tomato Curry, Green Salad', '1:1', 200.00, 'Continental'),
-(9, 'Bengali Mach Thali', 'Shorisha Hilsha, Fresh Rupchanda, Loitta fry, Rice, Dal', '1:1', 600.00, 'Bengali');
+INSERT INTO `meal` (`Meal_ID`, `Name`, `Description`, `Proportion`, `Pricing`, `Cuisine`, `Status`) VALUES
+(1, 'Murgi Thali', 'Rice, Chicken curry, Cashewnut Salad', '1:1', 150.00, 'Bengali', 'Takes Time'),
+(2, 'Vorta Thali', 'Aloo Vorta, Shutki Vorta, Potol Vorta, Begoon Vorta, Dim Vorta, Morich Vorta', '1:1', 100.00, 'Bengali', 'Takes Time'),
+(3, 'Indian Thali', 'Dosa, Sambar, Rayta, Pickle', '1:1', 120.00, 'Indian', 'Takes Time'),
+(4, 'Chinese Thali', 'Chowmein, Dim Sum, Fried Rice, Chili Chicken', '1:1', 200.00, 'Chinese', 'Takes Time'),
+(5, 'Korean Thali', 'Beef Ramen, Boiled eggs(x2), Dumplings', '1:1', 300.00, 'Korean', 'Takes Time'),
+(6, 'Burmese Thali', 'Myanmar Curry, Mohinga, Tea leaf Salad, Tofu', '1:1', 300.00, 'Burmese', 'Takes Time'),
+(7, 'Italian Thali', 'Prawn Spaghetti, Tiramisu, Margherita Pizza', '1:1', 500.00, 'Italian', 'Takes Time'),
+(8, 'Veg Thali', 'Veg Biriyani, Tomato Curry, Green Salad', '1:1', 200.00, 'Continental', 'Takes Time'),
+(9, 'Bengali Mach Thali', 'Shorisha Hilsha, Fresh Rupchanda, Loitta fry, Rice, Dal', '1:1', 600.00, 'Bengali', 'Takes Time');
 
 -- --------------------------------------------------------
 
@@ -156,15 +216,16 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`OrderID`, `Customer_ID`, `Cost`, `Status`, `Date`) VALUES
-(1, 1, 300.00, 'Pending', '2025-09-01'),
-(2, 1, 200.00, 'Pending', '2025-09-01'),
-(3, 1, 120.00, 'Pending', '2025-09-01'),
-(4, 1, 270.00, 'Pending', '2025-09-01'),
-(5, 1, 150.00, 'Pending', '2025-09-01'),
-(6, 1004, 350.00, 'Pending', '2025-09-02'),
-(7, 1004, 100.00, 'Pending', '2025-09-02'),
-(8, 1004, 300.00, 'Pending', '2025-09-02'),
-(9, 1004, 300.00, 'Pending', '2025-09-02');
+(6, 1004, 350.00, 'On the way', '2025-09-02'),
+(7, 1004, 100.00, 'Delivered', '2025-09-02'),
+(8, 1004, 300.00, 'Accepted', '2025-09-02'),
+(9, 1004, 300.00, 'Delivered', '2025-09-02'),
+(10, 1001, 500.00, 'Delivered', '2025-09-04'),
+(11, 1001, 150.00, 'Pending', '2025-09-05'),
+(12, 1001, 750.00, 'Accepted', '2025-09-05'),
+(13, 1001, 100.00, 'Accepted', '2025-09-05'),
+(14, 1001, 300.00, 'Pending', '2025-09-05'),
+(15, 1005, 1200.00, 'Accepted', '2025-09-05');
 
 -- --------------------------------------------------------
 
@@ -184,16 +245,17 @@ CREATE TABLE `orders_have_meal` (
 --
 
 INSERT INTO `orders_have_meal` (`M_ID`, `OrderID`, `Quantity`, `Price`) VALUES
-(1, 4, 1, 150.00),
-(1, 5, 1, 150.00),
 (1, 6, 1, 150.00),
+(1, 11, 1, 150.00),
+(1, 12, 5, 150.00),
 (2, 6, 2, 100.00),
 (2, 7, 1, 100.00),
-(3, 3, 1, 120.00),
-(3, 4, 1, 120.00),
-(4, 2, 1, 200.00),
+(2, 10, 5, 100.00),
+(2, 13, 1, 100.00),
 (5, 8, 1, 300.00),
-(6, 9, 1, 300.00);
+(6, 9, 1, 300.00),
+(6, 14, 1, 300.00),
+(9, 15, 2, 600.00);
 
 -- --------------------------------------------------------
 
@@ -217,12 +279,14 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`U_ID`, `Email`, `Exp_Years`, `Name`, `Address`, `Type`, `Password`) VALUES
 (1, 'mehjabin.hasan@gmail.com', 11, 'Mehjabin Hasan', '3/B Selpark, Mirpur', 'Cook', 'mou1111'),
-(2, 'araf.cook@gmail.com', 3, 'Araf Rakib', 'Sec-4, Uttara, Dhaka', 'Cook', 'araf4200'),
+(2, 'araf.cooker@gmail.com', 3, 'Araf Rakib', 'Sec-4, Uttara, Dhaka', 'Cook', 'araf4200'),
+(3, 'rahim123@yahoo.com', 4, 'rahim hasan', 'rampura, dhaka', 'Cook', 'rahim123'),
 (101, 'admin101@gmail.com', 0, 'Admin01', '34/d Baily Road, Dhaka', 'Admin', 'admin123'),
-(1001, 'farhan.zahin@gmail.com', 0, 'Farhan Zahin', '7/A Banasree, Dhaka', 'Customer', 'fz1234'),
+(1001, 'farhan.zahin@gmail.com', 0, 'Farhan Zahin', '7/A Banasree, Dhaka', 'Customer', 'zahin1234'),
 (1002, 'ahona.hasan@gmail.com', 0, 'Ahona Hasan', '33/c Banani, Dhaka', 'Customer', 'ahona1234'),
 (1003, 'jungkook@gmail.com', 0, 'Jung Kook', '16/f Gulshan-1, Dhaka', 'Customer', 'kook97'),
-(1004, 'farzana.eti@gmail.com', 0, 'Farzana Eti', 'mirpur', 'Customer', '1234');
+(1004, 'farzana.eti@gmail.com', 0, 'Farzana Eti', 'mirpur', 'Customer', '1234'),
+(1005, 'tahmid@gmail.com', 0, 'tahmid', 'rampura, dhaka', 'Customer', 'tahmid123');
 
 --
 -- Triggers `user`
@@ -288,8 +352,8 @@ CREATE TABLE `user_id_tracker` (
 --
 
 INSERT INTO `user_id_tracker` (`user_type`, `next_id`) VALUES
-('Cook', 3),
-('Customer', 1005),
+('Cook', 4),
+('Customer', 1006),
 ('Admin', 102);
 
 -- --------------------------------------------------------
@@ -308,9 +372,20 @@ CREATE TABLE `user_phone_no` (
 --
 
 INSERT INTO `user_phone_no` (`User_ID`, `Phone_No`) VALUES
-(1001, 1552306466),
+(3, 1664572762),
+(1001, 1952306466),
 (1002, 1316733425),
-(1003, 1635895385);
+(1003, 1635895385),
+(1005, 1452306466);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `cook_ratings_summary`
+--
+DROP TABLE IF EXISTS `cook_ratings_summary`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cook_ratings_summary`  AS SELECT `c`.`U_ID` AS `Cook_ID`, `c`.`Name` AS `Cook_Name`, `c`.`Email` AS `Cook_Email`, `c`.`Exp_Years` AS `Exp_Years`, count(`r`.`Review_ID`) AS `Total_Reviews`, round(avg(`r`.`Rating`),1) AS `Average_Rating`, round(avg(`r`.`Food_Quality_Rating`),1) AS `Avg_Food_Quality`, round(avg(`r`.`Service_Rating`),1) AS `Avg_Service_Rating`, count(case when `r`.`Would_Recommend` = 1 then 1 end) AS `Recommend_Count`, round(count(case when `r`.`Would_Recommend` = 1 then 1 end) * 100.0 / count(`r`.`Review_ID`),1) AS `Recommend_Percentage`, max(`r`.`Created_Date`) AS `Last_Review_Date` FROM (`user` `c` left join `customer_rates_cooks` `r` on(`c`.`U_ID` = `r`.`CookID`)) WHERE `c`.`Type` = 'Cook' GROUP BY `c`.`U_ID`, `c`.`Name`, `c`.`Email`, `c`.`Exp_Years` ;
 
 --
 -- Indexes for dumped tables
@@ -341,7 +416,8 @@ ALTER TABLE `complaint_support`
 -- Indexes for table `customer_rates_cooks`
 --
 ALTER TABLE `customer_rates_cooks`
-  ADD PRIMARY KEY (`ReviewID`),
+  ADD PRIMARY KEY (`Review_ID`),
+  ADD KEY `order_review_fk` (`Order_ID`),
   ADD KEY `cook_rate_fk` (`CookID`),
   ADD KEY `customer_rate_fk` (`CustomerID`);
 
@@ -402,28 +478,16 @@ ALTER TABLE `catering_services`
   MODIFY `Catering_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `complaint_support`
---
-ALTER TABLE `complaint_support`
-  MODIFY `Complaint_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `customer_rates_cooks`
 --
 ALTER TABLE `customer_rates_cooks`
-  MODIFY `ReviewID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `meal`
---
-ALTER TABLE `meal`
-  MODIFY `Meal_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Review_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
@@ -453,7 +517,8 @@ ALTER TABLE `complaint_support`
 --
 ALTER TABLE `customer_rates_cooks`
   ADD CONSTRAINT `cook_rate_fk` FOREIGN KEY (`CookID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `customer_rate_fk` FOREIGN KEY (`CustomerID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `customer_rate_fk` FOREIGN KEY (`CustomerID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_review_fk` FOREIGN KEY (`Order_ID`) REFERENCES `orders` (`OrderID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`

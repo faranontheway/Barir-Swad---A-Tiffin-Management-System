@@ -4,7 +4,7 @@ require '../dbconnect.php';
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -49,7 +49,7 @@ $recent_orders = $conn->query("
     FROM orders o 
     JOIN user u ON o.Customer_ID = u.U_ID 
     ORDER BY o.Date DESC 
-    LIMIT 5
+    LIMIT 50
 ");
 
 // Recent users
@@ -58,7 +58,7 @@ $recent_users = $conn->query("
     FROM user 
     WHERE Type IN ('Customer', 'Cook') 
     ORDER BY U_ID DESC 
-    LIMIT 5
+    LIMIT 50
 ");
 ?>
 
@@ -68,127 +68,22 @@ $recent_users = $conn->query("
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Barir Swad</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .admin-header {
-            background: #851c7c;
-            color: white;
-            padding: 15px 0;
-            margin-bottom: 30px;
-        }
-        .admin-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .nav-links a:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .stat-card h3 {
-            margin: 0;
-            color: #666;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-        .stat-card .number {
-            font-size: 36px;
-            font-weight: bold;
-            color: #007bff;
-            margin: 10px 0;
-        }
-        .dashboard-sections {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        .section-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .section-card h3 {
-            margin-top: 0;
-            color: #333;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .table th, .table td {
-            padding: 8px 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        .table th {
-            background: #f8f9fa;
-            font-weight: bold;
-        }
-        .status {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .status.pending { background: #ffc107; color: white; }
-        .status.delivered { background: #28a745; color: white; }
-        .status.cancelled { background: #dc3545; color: white; }
-        .status.accepted { background: #17a2b8; color: white; }
-        .logout-btn {
-            background: #dc3545;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .logout-btn:hover {
-            background: #c82333;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/admin_style.css">
+    
 </head>
 <body>
     <header class="admin-header">
         <div class="admin-nav">
-            <h1> Barir Swad - Admin Panel</h1>
-            <nav class="nav-links">
-                
-                <a href="admin_orders.php">Orders</a>
+            <h1>🥘Barir Swad - Admin Panel</h1>
+            <nav class="nav-links">                
                 <a href="admin_users.php">Users</a>
+                <a href="admin_orders.php">Orders</a>
+                <a href="admin_notifications.php">Delievery Management</a>
                 <a href="admin_meals.php">Meals</a>
+                <a href="admin_catering.php">Catering</a>
+                <a href="../customer/cook_ratings.php">Reviews</a>
                 <a href="../complaint/admin_complaint_dashboard.php">Complaints</a>
-                <a href="admin_logout.php" class="logout-btn">Logout</a>
+                <a href="../logout.php" class="logout-btn">Logout</a>
             </nav>
         </div>
     </header>

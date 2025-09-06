@@ -45,24 +45,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price = trim($_POST['price']);
     $cuisine = trim($_POST['cuisine']);
 
-    if (!preg_match('/^\d+:\d+$/', $proportion)) {
+    // Check for unique meal name (excluding the current meal)
+    $check_sql = "SELECT Meal_ID FROM meal WHERE Name = ? AND Meal_ID != ?";
+    $check_stmt = $conn->prepare($check_sql);
+    $check_stmt->bind_param("si", $name, $meal_id);
+    $check_stmt->execute();
+    if ($check_stmt->get_result()->num_rows > 0) {
+        $message = "A meal with this name already exists. Please choose a different name.";
+    } elseif (!preg_match('/^\d+:\d+$/', $proportion)) {
         $message = "Proportion must be in the format num:num (e.g., 1:1)";
     } elseif (!is_numeric($price)) {
         $message = "Price must be a number";
     } else {
-        $stmt = $conn->prepare("
-            UPDATE meal 
-            SET Name = ?, Description = ?, Proportion = ?, `Pricing` = ?, Cuisine = ?
-            WHERE Meal_ID = ?
-        ");
-        $stmt->bind_param("sssdsi", $name, $description, $proportion, $price, $cuisine, $meal_id);
+        // Handle image upload if a new image is provided
+        $image_uploaded = false;
+        if (!empty($_FILES["image"]["name"])) {
+            $image_name = strtolower(str_replace(' ', '-', $name)) . '.jpg';
+            $target_dir = "../assets/images/";
+            $target_file = $target_dir . basename($image_name);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
 
-        if ($stmt->execute()) {
-            $message = "Meal updated successfully!";
-            // Refresh the meal data after update
-            $meal = ['Name'=>$name,'Description'=>$description,'Proportion'=>$proportion,'Pricing'=>$price,'Cuisine'=>$cuisine];
-        } else {
-            $message = "Error updating meal: " . $conn->error;
+            // Check if image file is an actual image
+            $check = getimagesize($_FILES["image"]["tmp_name"]);
+            if ($check === false) {
+                $message = "File is not an image.";
+                $uploadOk = 0;
+            }
+
+            // Check file size (limit to 5MB)
+            if ($_FILES["image"]["size"] > 5000000) {
+                $message = "Sorry, your file is too large (max 5MB).";
+                $uploadOk = 0;
+            }
+
+            // Allow only certain file formats
+            if ($imageFileType != "jpg" && $imageFileType != "jpeg") {
+                $message = "Sorry, only JPG/JPEG files are allowed.";
+                $uploadOk = 0;
+            }
+
+            if ($uploadOk) {
+                // Delete the old image if it exists
+                $old_image = $target_dir . strtolower(str_replace(' ', '-', $meal['Name'])) . '.jpg';
+                if (file_exists($old_image)) {
+                    unlink($old_image);
+                }
+
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                    $image_uploaded = true;
+                } else {
+                    $message = "Sorry, there was an error uploading your image.";
+                    $uploadOk = 0;
+                }
+            }
+        }
+
+        // Proceed with updating the meal if there are no issues
+        if ($message === '') {
+            $stmt = $conn->prepare("
+                UPDATE meal 
+                SET Name = ?, Description = ?, Proportion = ?, `Pricing` = ?, Cuisine = ?
+                WHERE Meal_ID = ?
+            ");
+            $stmt->bind_param("sssdsi", $name, $description, $proportion, $price, $cuisine, $meal_id);
+
+            if ($stmt->execute()) {
+                $message = "Meal updated successfully!" . ($image_uploaded ? " Image updated as well!" : "");
+                // Refresh the meal data after update
+                $meal = ['Name' => $name, 'Description' => $description, 'Proportion' => $proportion, 'Pricing' => $price, 'Cuisine' => $cuisine];
+            } else {
+                $message = "Error updating meal: " . $conn->error;
+                // Remove uploaded image if meal update fails
+                if ($image_uploaded) {
+                    unlink($target_file);
+                }
+            }
         }
     }
 }
@@ -91,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="form-container">
     <h1>Edit Meal</h1>
     <?php if($message) echo "<div class='message'>{$message}</div>"; ?>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <label>Meal Name</label>
         <input type="text" name="name" value="<?= htmlspecialchars($meal['Name']) ?>" required>
 
@@ -106,6 +164,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label>Cuisine</label>
         <input type="text" name="cuisine" value="<?= htmlspecialchars($meal['Cuisine']) ?>" required>
+
+        <label>Upload New Image (JPG/JPEG, max 5MB, optional)</label>
+        <input type="file" name="image" accept="image/jpeg,image/jpg">
 
         <button type="submit">Update</button>
     </form>
